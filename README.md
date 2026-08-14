@@ -1,0 +1,2 @@
+# Testrig
+First rmi project 
