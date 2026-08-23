@@ -28,7 +28,7 @@ MISC Components
 CUSTOM IR Sensor array
 | # | Component                 | Specification                 | Qty | Purpose                                                                      |
 | - | ------------------------- | ----------------------------- | --- | ---------------------------------------------------------------------------- |
-| 1 | IR LED                    | 940 nm, 5 mm                  | 14  | Emits infrared light toward the surface for each sensor channel              |
+| 1 | IR LED                    | TRT5000 IR sensor             | 14  | Emits infrared light toward the surface for each sensor channel              |
 | 2 | Phototransistor           | Matched to IR LED wavelength  | 14  | Detects reflected IR light, conducts more/less based on surface reflectivity |
 | 3 | Current-limiting resistor | 220 Ω                         | 14  | Protects each IR LED from excess current                                     |
 | 4 | Pull-down resistor        | 10 kΩ                         | 14  | Converts phototransistor conduction into a readable analog voltage           |
