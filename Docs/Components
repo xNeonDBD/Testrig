@@ -22,15 +22,14 @@ MISC Components
 | 12 | Ceramic capacitors     | 100 nF                      | 2–4 | Suppresses high-frequency noise           |
 | 13 | Battery connector      | -                           | 1   | Battery connection                        |
 | 14 | Logic-level converter  | 3.3 V ↔ 5 V                 | 1   | Only needed if IR board outputs 5 V logic |
-| 15 | Wires                  | 22–26 AWG                   | —   | Power and signal wiring                   |
+| 15 | Wires                  | jumper wire                 | —   | Power and signal wiring                   |
 | 16 | PCB/perfboard          | Small                       | 1   | Final assembly platform                   |
 
 CUSTOM IR Sensor array
 | # | Component                 | Specification                 | Qty | Purpose                                                                      |
 | - | ------------------------- | ----------------------------- | --- | ---------------------------------------------------------------------------- |
 | 1 | IR LED                    | TRT5000 IR sensor             | 14  | Emits infrared light toward the surface for each sensor channel              |
-| 2 | Phototransistor           | Matched to IR LED wavelength  | 14  | Detects reflected IR light, conducts more/less based on surface reflectivity |
-| 3 | Current-limiting resistor | 220 Ω                         | 14  | Protects each IR LED from excess current                                     |
-| 4 | Pull-down resistor        | 10 kΩ                         | 14  | Converts phototransistor conduction into a readable analog voltage           |
-| 5 | CD74HC4067 multiplexer    | 16-channel analog/digital mux | 1   | Routes all 14 sensor outputs into a single ESP32 ADC pin                     |
-| 6 | Curved PCB/perfboard      | Custom-cut to your wing shape | 1   | Physically mounts all 14 sensor pairs in your curved arrangement             |
+| 2 | Current-limiting resistor | 220 Ω                         | 14  | Protects each IR LED from excess current                                     |
+| 3 | Pull-down resistor        | 10 kΩ                         | 14  | Converts phototransistor conduction into a readable analog voltage           |
+| 4 | CD74HC4067 multiplexer    | 16-channel analog/digital mux | 1   | Routes all 14 sensor outputs into a single ESP32 ADC pin                     |
+| 5 | Curved PCB/perfboard      | Custom-cut to your wing shape | 1   | Physically mounts all 14 sensor pairs in your curved arrangement             |
