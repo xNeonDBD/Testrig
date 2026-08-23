@@ -8,7 +8,7 @@ MAIN components
 | 3  | N20 gear motors            | 6 V, encoder-equipped, ~300–500 RPM | 2   | Drives the wheels                              |
 | 4  | Quadrature encoders        | Integrated with N20 motors          | 2   | Measures actual wheel/motor rotation           |
 | 5  | DRV8833 motor driver       | Dual H-bridge                       | 1   | Drives both N20 motors                         |
-| 6  | 2S LiPo battery            | 7.4 V nominal, ~850–1500 mAh        | 1   | Main power source                              |
+| 6  |  Li-ion battery            | ICR 18650 26JM sassung SDIEM TJX4   | 2   | Main power source                              |
 | 7  | Buck converter             | Adjustable, 5 V output, ≥2 A        | 1   | Steps battery voltage down to 5 V              |
 | 8  | Wheels                     | Lightweight, 30–40 mm diameter      | 2   | Converts motor rotation to movement            |
 | 9  | Front skid/caster          | Low-friction (PTFE preferred)       | 1   | Third ground-contact point                     |
@@ -20,7 +20,7 @@ MISC Components
 | -- | ---------------------- | --------------------------- | --- | ----------------------------------------- |
 | 11 | Electrolytic capacitor | 470–1000 µF                 | 1   | Smooths motor current spikes              |
 | 12 | Ceramic capacitors     | 100 nF                      | 2–4 | Suppresses high-frequency noise           |
-| 13 | Battery connector      | XT30/JST (per battery spec) | 1   | Battery connection                        |
+| 13 | Battery connector      | -                           | 1   | Battery connection                        |
 | 14 | Logic-level converter  | 3.3 V ↔ 5 V                 | 1   | Only needed if IR board outputs 5 V logic |
 | 15 | Wires                  | 22–26 AWG                   | —   | Power and signal wiring                   |
 | 16 | PCB/perfboard          | Small                       | 1   | Final assembly platform                   |
