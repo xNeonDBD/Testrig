@@ -1,0 +1,36 @@
+MAIN components
+
+
+| #  | Component                  | Specification                       | Qty | Purpose                                        |
+| -- | -------------------------- | ----------------------------------- | --- | ---------------------------------------------- |
+| 1  | ESP32 DevKit               | ESP32-WROOM-32 / DevKit V1          | 1   | Brain — reads sensors, runs PID, drives motors |
+| 2  | 14-channel curved IR array | Custom board                        | 1   | Detects line position                          |
+| 3  | N20 gear motors            | 6 V, encoder-equipped, ~300–500 RPM | 2   | Drives the wheels                              |
+| 4  | Quadrature encoders        | Integrated with N20 motors          | 2   | Measures actual wheel/motor rotation           |
+| 5  | DRV8833 motor driver       | Dual H-bridge                       | 1   | Drives both N20 motors                         |
+| 6  | 2S LiPo battery            | 7.4 V nominal, ~850–1500 mAh        | 1   | Main power source                              |
+| 7  | Buck converter             | Adjustable, 5 V output, ≥2 A        | 1   | Steps battery voltage down to 5 V              |
+| 8  | Wheels                     | Lightweight, 30–40 mm diameter      | 2   | Converts motor rotation to movement            |
+| 9  | Front skid/caster          | Low-friction (PTFE preferred)       | 1   | Third ground-contact point                     |
+| 10 | Power switch               | Rated for battery current           | 1   | Turns robot on/off                             |
+
+MISC Components 
+
+| #  | Component              | Specification               | Qty | Purpose                                   |
+| -- | ---------------------- | --------------------------- | --- | ----------------------------------------- |
+| 11 | Electrolytic capacitor | 470–1000 µF                 | 1   | Smooths motor current spikes              |
+| 12 | Ceramic capacitors     | 100 nF                      | 2–4 | Suppresses high-frequency noise           |
+| 13 | Battery connector      | XT30/JST (per battery spec) | 1   | Battery connection                        |
+| 14 | Logic-level converter  | 3.3 V ↔ 5 V                 | 1   | Only needed if IR board outputs 5 V logic |
+| 15 | Wires                  | 22–26 AWG                   | —   | Power and signal wiring                   |
+| 16 | PCB/perfboard          | Small                       | 1   | Final assembly platform                   |
+
+CUSTOM IR Sensor array
+| # | Component                 | Specification                 | Qty | Purpose                                                                      |
+| - | ------------------------- | ----------------------------- | --- | ---------------------------------------------------------------------------- |
+| 1 | IR LED                    | 940 nm, 5 mm                  | 14  | Emits infrared light toward the surface for each sensor channel              |
+| 2 | Phototransistor           | Matched to IR LED wavelength  | 14  | Detects reflected IR light, conducts more/less based on surface reflectivity |
+| 3 | Current-limiting resistor | 220 Ω                         | 14  | Protects each IR LED from excess current                                     |
+| 4 | Pull-down resistor        | 10 kΩ                         | 14  | Converts phototransistor conduction into a readable analog voltage           |
+| 5 | CD74HC4067 multiplexer    | 16-channel analog/digital mux | 1   | Routes all 14 sensor outputs into a single ESP32 ADC pin                     |
+| 6 | Curved PCB/perfboard      | Custom-cut to your wing shape | 1   | Physically mounts all 14 sensor pairs in your curved arrangement             |
