@@ -67,12 +67,12 @@ The final layout is intended to make assembly and future changes easier without 
 
 ## Chassis Design Features
 
-### Adjustable Sensor Mount
+### Adjustable PCB Mount
 
-A straight slot is provided for the IR sensor array, allowing it to be moved forward or backward during testing to find the best position for line detection and turning performance.
+A straight slot is provided for the PCB/ perfboard , allowing it to be moved forward or backward during testing to find the best position for line detection and turning performance.
 
 ```text
-        IR SENSOR ARRAY
+        Perfboard
     ─────────────────────
           ↑       ↑
        Adjustable slot
@@ -89,7 +89,7 @@ Two large rectangular sections provide a stable location for the battery holder.
 
 ![Caster Ball Mount](Cad/Caster%20ball%20mount.png)
 
-The caster ball mount (`Caster_Ball_Mount.SLDPRT`) is currently a **working/scratch file**, kept separate from the main chassis so it can be freely edited and iterated on.
+The caster ball mount (`Caster_Ball_Mount.SLDPRT`) is currently a en**working/scratch file**, kept separate from the main chassis so it can be freely edited and iterated on.
 
 It's being used to test and lock down:
 
@@ -111,7 +111,7 @@ A supporting bracket part (`Bracket.SLDPRT`) used alongside the chassis assembly
 The chassis was designed with emphasis on:
 
 - Simple manufacturability
-- Adjustable sensor positioning
+- Adjustable PCB positioning
 - Easy PCB mounting
 - Secure battery placement
 - Low unnecessary material
