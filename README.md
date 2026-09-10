@@ -34,7 +34,7 @@ The chassis was designed in two main versions.
 
 ### V1 — Curved IR Array Design
 
-![Chassis V1]
+![Chassis V1](Docs/Components/chassis_v1.jpg)
 
 The first version was designed around a **curved IR sensor array**. The idea was to place the sensors along a curved front section so the array could cover a wider area while following the line. The chassis also had to accommodate the required sensor mounting holes and spacing.
 
@@ -47,7 +47,7 @@ After considering these issues, the curved-array design was dropped in favour of
 
 ### V2 — Straight Analog IR Array (Current)
 
-![Chassis V2]
+![Chassis V2](Docs/Components/chassis_v2.jpg)
 
 The second version uses a **straight analog IR sensor array**. This makes the sensor readings easier to process because the sensors are arranged along a single straight line, and it makes physical mounting and calibration much simpler.
 
@@ -85,6 +85,17 @@ A straight slot is provided for the IR sensor array, allowing it to be moved for
 
 Two large rectangular sections provide a stable location for the battery holder. It can be placed on top of the base and secured with mounting screws if required, preventing the batteries from shifting during sharp turns.
 
+### Caster Ball Mount
+
+The caster ball mount (`Caster_Ball_Mount.SLDPRT`) is currently a **working/scratch file**, kept separate from the main chassis so it can be freely edited and iterated on.
+
+It's being used to test and lock down:
+
+- Motor mounting hole positions and spacing for the 2 N20 motors
+- Final caster ball mounting height and hole dimensions relative to the wheels
+
+Once the correct dimensions are confirmed through physical testing, the finalised values will be transferred into the main chassis file (`Chasis_final.SLDPRT`).
+
 ---
 
 ## CAD Design
@@ -121,7 +132,7 @@ Final chassis dimensions and hole positions may be adjusted after physical testi
 
 One of the main problems during the CAD stage was **hole placement and dimensional accuracy**. Since the chassis depends on several different components being mounted together, even a small error in hole spacing or width can cause problems during physical assembly.
 
-For this reason, the V2 design uses slots where adjustment is useful instead of relying on a single fixed mounting position, making the chassis more forgiving during assembly and testing.
+For this reason, the V2 design uses slots where adjustment is useful instead of relying on a single fixed mounting position, making the chassis more forgiving during assembly and testing. The caster ball mount is treated the same way — kept as an editable scratch part until the motor and caster dimensions are finalised.
 
 ---
 
@@ -149,6 +160,7 @@ For this reason, the V2 design uses slots where adjustment is useful instead of 
 - Reducing unnecessary chassis material
 - Adding more adjustable mounting points
 - Testing different IR sensor positions
+- Locking down motor mounting and caster ball mounting dimensions
 - Optimising the chassis after the first physical prototype
 
 ---
@@ -187,6 +199,7 @@ For this reason, the V2 design uses slots where adjustment is useful instead of 
 | PCB Mounting | Improved |
 | Adjustable IR Mount | Added |
 | Battery Mount | Added |
+| Caster Ball Mount | In progress — scratch file for dimension testing |
 
 ---
 
@@ -196,5 +209,3 @@ This chassis is still a prototype. Final dimensions may change after testing the
 
 The main goal of the current design is to keep the robot simple, adjustable, and easy to modify while avoiding the mounting and CAD issues encountered in V1.
 </content>
-# Testrig
-First rmi project 
