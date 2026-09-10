@@ -32,22 +32,22 @@ The chassis went through multiple design iterations before settling on a simpler
 
 The chassis was designed in two main versions.
 
-### V1 — Curved IR Array Design
+### V1 — Curved IR Array Design (Dropped Early)
 
-![Chassis V1](Docs/Components/chassis_v1.jpg)
+![Chassis V1](Cad/Chasis%20V1.png)
 
 The first version was designed around a **curved IR sensor array**. The idea was to place the sensors along a curved front section so the array could cover a wider area while following the line. The chassis also had to accommodate the required sensor mounting holes and spacing.
 
-There were two major problems with this design:
+This version was **abandoned very quickly**, before it went far into detailed CAD, once two major problems became clear:
 
 1. **Coding complexity** — A curved sensor arrangement requires more complicated sensor mapping and calibration. Since the sensor positions aren't evenly aligned along a straight line, converting the readings into a reliable position/error value is more difficult.
-2. **CAD hole spacing** — Getting the correct hole positions, lengths, and widths for the curved arrangement became a major problem during CAD modelling. Small changes in sensor dimensions or mounting positions affected the rest of the chassis.
+2. **CAD hole spacing** — Getting the correct hole positions, lengths, and widths for the curved arrangement became a problem almost immediately during modelling. Small changes in sensor dimensions or mounting positions affected the rest of the chassis.
 
-After considering these issues, the curved-array design was dropped in favour of a simpler straight sensor arrangement.
+Rather than pushing through these issues, the curved-array design was dropped early in favour of a simpler straight sensor arrangement, which became V2.
 
 ### V2 — Straight Analog IR Array (Current)
 
-![Chassis V2](Docs/Components/chassis_v2.jpg)
+![Chassis Final](Cad/Chasis%20Final.png)
 
 The second version uses a **straight analog IR sensor array**. This makes the sensor readings easier to process because the sensors are arranged along a single straight line, and it makes physical mounting and calibration much simpler.
 
@@ -87,6 +87,8 @@ Two large rectangular sections provide a stable location for the battery holder.
 
 ### Caster Ball Mount
 
+![Caster Ball Mount](Cad/Caster%20ball%20mount.png)
+
 The caster ball mount (`Caster_Ball_Mount.SLDPRT`) is currently a **working/scratch file**, kept separate from the main chassis so it can be freely edited and iterated on.
 
 It's being used to test and lock down:
@@ -95,6 +97,12 @@ It's being used to test and lock down:
 - Final caster ball mounting height and hole dimensions relative to the wheels
 
 Once the correct dimensions are confirmed through physical testing, the finalised values will be transferred into the main chassis file (`Chasis_final.SLDPRT`).
+
+### Bracket
+
+![Bracket](Cad/Bracket-1.PNG)
+
+A supporting bracket part (`Bracket.SLDPRT`) used alongside the chassis assembly.
 
 ---
 
@@ -134,6 +142,8 @@ One of the main problems during the CAD stage was **hole placement and dimension
 
 For this reason, the V2 design uses slots where adjustment is useful instead of relying on a single fixed mounting position, making the chassis more forgiving during assembly and testing. The caster ball mount is treated the same way — kept as an editable scratch part until the motor and caster dimensions are finalised.
 
+This same reasoning is why V1 was dropped so early — rather than spending time refining a curved layout with compounding CAD and coding problems, effort was redirected into the straight-array V2 design almost immediately.
+
 ---
 
 ## Testing Checklist
@@ -170,8 +180,12 @@ For this reason, the V2 design uses slots where adjustment is useful instead of 
 ```text
 .
 ├── Cad/
+│   ├── Bracket-1.PNG
 │   ├── Bracket.SLDPRT
+│   ├── Caster ball mount.png
 │   ├── Caster_Ball_Mount.SLDPRT
+│   ├── Chasis Final.png
+│   ├── Chasis V1.png
 │   ├── Chasis.SLDPRT
 │   └── Chasis_final.SLDPRT
 ├── Docs/
@@ -194,10 +208,9 @@ For this reason, the V2 design uses slots where adjustment is useful instead of 
 | Battery | 2 × Li-ion |
 | Battery Holder | Selected |
 | Wheels | Selected |
-| Chassis V1 | Abandoned |
+| Chassis V1 | Dropped early (curved array issues) |
 | Chassis V2 | Current design (`Chasis_final.SLDPRT`) |
 | PCB Mounting | Improved |
-| Adjustable IR Mount | Added |
 | Battery Mount | Added |
 | Caster Ball Mount | In progress — scratch file for dimension testing |
 
@@ -206,6 +219,8 @@ For this reason, the V2 design uses slots where adjustment is useful instead of 
 ## Notes
 
 This chassis is still a prototype. Final dimensions may change after testing the actual motors, wheels, sensor array, battery holder, and electronics together.
+
+V1 was only a brief exploration — it was dropped very quickly once the curved sensor array introduced compounding coding and CAD problems, so most of the actual design effort went into V2.
 
 The main goal of the current design is to keep the robot simple, adjustable, and easy to modify while avoiding the mounting and CAD issues encountered in V1.
 </content>
