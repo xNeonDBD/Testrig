@@ -2,7 +2,7 @@
 
 A compact line-following robot designed around an ESP32, N20 geared motors with encoders, and an adjustable analog IR sensor array.
 
-The chassis went through multiple design iterations before settling on a simpler and more practical layout. The main focus was keeping the sensor mounting adjustable, making the electronics easier to mount, and keeping the battery secure without making the chassis unnecessarily complicated.
+The chassis went through **three main design stages** — V1, V2, and V2 Final — before settling on a simpler, more practical, and more printable layout. This README documents each stage in order, including what changed and why.
 
 ---
 
@@ -12,15 +12,15 @@ The chassis went through multiple design iterations before settling on a simpler
 
 - **Microcontroller:** ESP32
   - Specific version: __________
-- **IR Sensor Array:** RLS-08
-- **Motor Driver:** TB6612FNG
+- **IR Sensor Array:** Analog straight IR sensor array
+- **Motor Driver:** __________
 - **Battery:** 2 × 2.7 V Li-ion batteries
-- **Battery Holder**
+- **Battery Holder:** 1 × __________
 - **Power Converter / Buck Converter:** __________
 
 ### Mechanical
 
-- **Motors:** 2 × N20 300RPM geared motors with encoders
+- **Motors:** 2 × N20 6 V geared motors with encoders
 - **Wheels:** 2 × high-traction 32 mm wheels
 - **Caster Wheel:** 1 × caster ball mount
 - **Chassis:** Custom CAD-designed chassis
@@ -28,9 +28,7 @@ The chassis went through multiple design iterations before settling on a simpler
 
 ---
 
-## Chassis
-
-The chassis was designed in two main versions.
+## Chassis Design History
 
 ### V1 — Curved IR Array Design (Dropped Early)
 
@@ -45,29 +43,53 @@ This version was **abandoned very quickly**, before it went far into detailed CA
 
 Rather than pushing through these issues, the curved-array design was dropped early in favour of a simpler straight sensor arrangement, which became V2.
 
-### V2 — Straight Analog IR Array (Current)
+---
+
+### V2 — Straight Array with Diagonal Slots
+
+![Chassis V2](Cad/Chasis%20Final.png)
+
+V2 replaced the curved array with a **straight analog IR sensor array**, since sensors on a single straight line are far easier to read, calibrate, and map to a position/error value.
+
+**Key changes from V1:**
+
+- Replaced the curved IR array with a straight analog IR array.
+- Added a **long straight mounting slot** for the IR sensor/PCB, so sensor position could be adjusted instead of fixed.
+- Improved the PCB mounting arrangement.
+- Added two large rectangular recessed/extruded sections for the battery holder, so it sits securely instead of shifting during operation.
+- Battery holder/PCB could be secured further with mounting screws if needed.
+
+**Why diagonal slots were used for mounting holes:**
+
+At this stage, most of the mounting holes (not just the IR sensor mount) were also cut as **diagonal/angled slots** rather than fixed circular holes. The reasoning at the time was to build in extra tolerance — since the chassis depends on several separate components (motors, PCB, battery holder) lining up together, slots gave room to shift each part slightly during assembly to compensate for small CAD or print inaccuracies, without needing to redesign or reprint the chassis. It felt like a safer, more forgiving choice while the exact component dimensions were still being finalised.
+
+This made V2 more flexible during initial assembly, but it introduced a new problem that only became clear once parts were actually mounted and tested — covered in V2 Final below.
+
+---
+
+### V2 Final — Fixed Holes + Reduced Width
 
 ![Chassis Final](Cad/Final_chasis.png)
 
-The second version uses a **straight analog IR sensor array**. This makes the sensor readings easier to process because the sensors are arranged along a single straight line, and it makes physical mounting and calibration much simpler.
+V2 Final keeps the straight IR array and general layout from V2, but corrects two problems discovered after building and testing V2: loose mounting and a chassis that didn't fit the printer.
 
-**Main changes from V1:**
+**Change 1 — Diagonal slots removed, replaced with fixed holes:**
 
-- Replaced the curved IR array with a straight analog IR array.
-- Added a **long straight mounting slot** for the sensor/PCB.
-- The slot allows sensor position to be adjusted instead of being fixed.
-- Improved the PCB mounting arrangement.
-- Added two large rectangular recessed/extruded sections for the battery holder.
-- Battery holder sits securely on the chassis instead of shifting during operation.
-- Battery holder/PCB can be secured further with mounting screws if needed.
+The diagonal slots used for general mounting in V2 were **removed and replaced with fixed-position circular holes** at defined spacing.
 
-**Latest revision — fixed hole spacing:**
+The extra tolerance from slots turned out to cause more problems than it solved: mounting screws sat loose inside the slots instead of clamping tightly, letting the PCB and brackets shift slightly under vibration or load from the motors. Fixed holes with accurate, pre-calculated spacing removed that play entirely, giving a tighter, more repeatable, more rigid assembly. The one exception is the **IR sensor mount**, which intentionally keeps its slot, since sensor position genuinely needs to be tunable during testing — that's a case where adjustability is a feature, not a workaround.
 
-Earlier V2 iterations used **diagonal/angled mounting slots** for some of the PCB and mounting holes. These have now been **removed and replaced with fixed-position holes** with defined hole spacing.
+**Change 2 — Overall chassis width reduced:**
 
-The reasoning: slots make sense where deliberate adjustability is needed (like the IR sensor mounting slot), but for the general PCB/mounting holes, a slot lets the mounting screw sit loose and shift under vibration or load instead of holding the part rigidly in place. Fixed holes with precise spacing give a tighter, more repeatable fit and stop the screws from working loose during operation.
+The original V2 chassis was too **long to fit flat on the 3D printer's build plate**. The only way to print it at that size would have been to stand it up at an angle and rely on support structures, which was rejected for three reasons:
 
-The final layout is intended to make assembly and future changes easier without redesigning the entire chassis.
+1. **Resource waste** — angled printing with supports uses a large amount of extra filament that just gets discarded afterward.
+2. **Holes get blocked by supports** — mounting and sensor holes risked being filled in or distorted by support material generated underneath them, requiring cleanup and risking inaccurate final dimensions.
+3. **Excessive print time** — for a relatively simple, flat chassis part, printing vertically with supports takes far longer than justified.
+
+To avoid all three issues at once, the chassis **width was reduced** so the entire part fits flat on the print bed in a single orientation, with no supports required.
+
+**Net result:** V2 Final is more rigid (no loose slots except where needed) and cheaper/faster to print (flat, no supports) than V2 — without losing any of the functional improvements V2 made over V1.
 
 ---
 
@@ -75,7 +97,7 @@ The final layout is intended to make assembly and future changes easier without 
 
 ### Adjustable Sensor Mount
 
-A straight slot is provided for the IR sensor array, allowing it to be moved forward or backward during testing to find the best position for line detection and turning performance. This is the one mount that intentionally keeps a slot, since sensor position genuinely needs to be tuned during testing.
+A straight slot is provided for the IR sensor array, allowing it to be moved forward or backward during testing to find the best position for line detection and turning performance. This is the one mount that intentionally keeps a slot across every revision, since sensor position genuinely needs to be tuned during testing.
 
 ```text
         IR SENSOR ARRAY
@@ -87,15 +109,25 @@ A straight slot is provided for the IR sensor array, allowing it to be moved for
              CHASSIS
 ```
 
-### Fixed Mounting Holes (Updated)
+### Fixed Mounting Holes (V2 Final)
 
-The diagonal mounting slots used in earlier revisions have been replaced with **fixed circular holes** at defined spacing, visible in the latest chassis render (`Final_chasis.png`).
+The diagonal mounting slots used in V2 have been replaced with **fixed circular holes** at defined spacing in V2 Final, visible in `Final_chasis.png`.
 
-This affects the main PCB/electronics mounting holes and the motor-side mounting pattern. The fixed-hole approach was chosen over slots because:
+This affects the main PCB/electronics mounting holes and the motor-side mounting pattern. Fixed holes were chosen over slots because:
 
 - Slots allowed the mounting screws to sit loose rather than clamping tightly.
 - Loose screws risk shifting the PCB or bracket position over time, especially with vibration from the motors.
 - Fixed holes with accurate spacing give a more rigid, repeatable assembly once tightened.
+
+### Reduced Chassis Width (V2 Final)
+
+The V2 chassis length exceeded the 3D printer's flat build area. Printing it as-is would have required standing the part up at an angle with support structures, which was rejected for three reasons:
+
+- **Wasted material** — supports consume significant extra filament for no functional benefit.
+- **Blocked holes** — mounting and sensor holes could get filled or distorted by support material underneath them.
+- **Long print time** — a simple flat chassis shouldn't need a lengthy angled/supported print.
+
+The chassis width was reduced in V2 Final so the whole part prints flat on the bed in one orientation, with no supports needed.
 
 ### Battery Mount
 
@@ -133,16 +165,19 @@ The chassis was designed with emphasis on:
 - Low unnecessary material
 - Easy access to electronics
 - Compatibility with N20 motors and 32 mm wheels
+- Fitting flat on the 3D printer bed without supports
 
-Final chassis dimensions and hole positions may be adjusted after physical testing, since actual component tolerances can differ from CAD dimensions.
+Final chassis dimensions and hole positions may still be adjusted after physical testing, since actual component tolerances can differ from CAD dimensions.
 
-### CAD Change Log
+### CAD Change Log (Chronological)
 
-| Change | Reason |
-|---|---|
-| Diagonal/angled mounting slots removed | Slots left mounting screws too loose, risking shifting under load/vibration |
-| Fixed-position circular holes added with defined spacing | Gives a tighter, more repeatable, rigid fit for PCB and mounting points |
-| IR sensor slot retained | Sensor position still needs to be adjustable during testing, unlike the other mounts |
+| Stage | Change | Reason |
+|---|---|---|
+| V1 → V2 | Curved IR array replaced with straight IR array | Curved layout caused sensor-mapping/coding complexity and CAD hole-spacing problems |
+| V2 | Diagonal/angled slots used for general mounting holes | Intended to give tolerance for component/print inaccuracies during assembly |
+| V2 → V2 Final | Diagonal slots removed, replaced with fixed circular holes at defined spacing | Slots left mounting screws too loose, allowing PCB/bracket shift under vibration or load |
+| V2 → V2 Final | IR sensor mounting slot retained | Sensor position still needs to be adjustable during testing, unlike the other mounts |
+| V2 → V2 Final | Overall chassis width reduced | Original V2 length didn't fit flat on the print bed; avoids wasteful angled/supported prints |
 
 ---
 
@@ -162,11 +197,13 @@ Final chassis dimensions and hole positions may be adjusted after physical testi
 
 ## Design Considerations
 
-One of the main problems during the CAD stage was **hole placement and dimensional accuracy**. Since the chassis depends on several different components being mounted together, even a small error in hole spacing or width can cause problems during physical assembly.
+One of the main problems throughout the CAD stage was **hole placement and dimensional accuracy**. Since the chassis depends on several different components being mounted together, even a small error in hole spacing or width can cause problems during physical assembly.
 
-Initially, slots were used more liberally across the chassis to allow for adjustment. After testing, it became clear that slots are only useful where adjustability is actually needed (the IR sensor mount) — everywhere else, they just let mounting screws sit loose. The mounting holes were therefore converted to fixed positions with accurate spacing, trading adjustability for a more rigid and repeatable fit.
+V1 was dropped almost immediately because a curved sensor layout compounded both coding complexity and CAD hole-spacing issues, so effort was redirected into a straight-array design (V2) very early.
 
-This same reasoning is why V1 was dropped so early — rather than spending time refining a curved layout with compounding CAD and coding problems, effort was redirected into the straight-array V2 design almost immediately.
+V2 initially used diagonal slots liberally across the mounting holes, treating adjustability as a safety margin against CAD or print inaccuracy. In practice, this backfired — slots meant to smooth over minor errors and screws sat loose instead of clamping, letting parts shift under vibration. V2 Final corrected this by converting general mounting holes to fixed positions with accurate spacing, keeping a slot only where adjustability is a genuine functional requirement (the IR sensor mount).
+
+Manufacturability on the actual printer also forced a change in V2 Final. The original V2 length couldn't fit flat within the print bed, and printing it angled with supports would have wasted filament, risked blocking holes with support material, and taken far longer than justified for a simple flat part. Reducing the chassis width solved all three problems at once by keeping the whole print flat and support-free.
 
 ---
 
@@ -183,6 +220,7 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 - Cable routing
 - Overall chassis balance
 - Fixed mounting holes are tight with no play (post slot-removal)
+- Chassis prints flat on the bed without supports
 
 ---
 
@@ -193,7 +231,7 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 - Improving PCB mounting
 - Adding dedicated cable-routing holes
 - Reducing unnecessary chassis material
-- Adding more adjustable mounting points where genuinely needed
+- Adding more adjustable mounting points only where genuinely needed
 - Testing different IR sensor positions
 - Locking down motor mounting and caster ball mounting dimensions
 - Optimising the chassis after the first physical prototype
@@ -209,6 +247,7 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 │   ├── Bracket.SLDPRT
 │   ├── Caster ball mount.png
 │   ├── Caster_Ball_Mount.SLDPRT
+│   ├── Chasis Final.png
 │   ├── Chasis V1.png
 │   ├── Chasis.SLDPRT
 │   ├── Chasis_final.SLDPRT
@@ -234,9 +273,11 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 | Battery Holder | Selected |
 | Wheels | Selected |
 | Chassis V1 | Dropped early (curved array issues) |
-| Chassis V2 | Current design (`Chasis_final.SLDPRT`) |
-| PCB Mounting | Fixed holes (slots removed) |
-| Adjustable IR Mount | Added |
+| Chassis V2 | Superseded (diagonal slots caused loose mounting) |
+| Chassis V2 Final | Current design (`Chasis_final.SLDPRT` / `Final_chasis.png`) |
+| PCB Mounting | Fixed holes (slots removed in V2 Final) |
+| Chassis Width | Reduced in V2 Final to fit print bed flat |
+| Adjustable IR Mount | Added, retained through all revisions |
 | Battery Mount | Added |
 | Caster Ball Mount | In progress — scratch file for dimension testing |
 
@@ -246,9 +287,11 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 
 This chassis is still a prototype. Final dimensions may change after testing the actual motors, wheels, sensor array, battery holder, and electronics together.
 
-V1 was only a brief exploration — it was dropped very quickly once the curved sensor array introduced compounding coding and CAD problems, so most of the actual design effort went into V2.
+**V1** was only a brief exploration — dropped very quickly once the curved sensor array introduced compounding coding and CAD problems.
 
-The mounting strategy was also revised partway through V2: diagonal slots were replaced with fixed, precisely spaced holes after realising slots left the mounting screws too loose for a stable assembly.
+**V2** introduced the straight sensor array and adjustable mounts, but used diagonal slots for general mounting holes to allow for assembly tolerance — a choice that later proved to make the assembly too loose.
 
-The main goal of the current design is to keep the robot simple, adjustable where it matters, and easy to modify while avoiding the mounting and CAD issues encountered in V1.
+**V2 Final** fixed both remaining issues from V2: mounting slots were converted to fixed, precisely spaced holes for rigidity, and the chassis width was reduced so the part prints flat on the bed without wasteful, hole-blocking, time-consuming angled supports.
+
+The main goal of the current (V2 Final) design is to keep the robot simple, rigid where it needs to be, adjustable only where it matters, and easy to manufacture on the available 3D printer.
 </content>
