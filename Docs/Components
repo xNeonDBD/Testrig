@@ -1,35 +1,137 @@
-MAIN components
+==================================================================
+LINE FOLLOWING ROBOT - COMPONENTS
+Location: Docs/Components/Components.txt
+==================================================================
 
+1. MICROCONTROLLER
+-------------------
+Part: ESP32 (exact board variant TBD)
+Role: Reads IR sensor array, runs line-following control loop,
+      drives motor PWM via TB6612FNG.
+Notes: 3.3V logic. Confirm ADC pin count vs sensor channels.
+       No encoder feedback available (see Motors section) -
+       control loop will run open-loop on motor speed.
 
-| #  | Component                  | Specification                       | Qty | Purpose                                        |
-| -- | -------------------------- | ----------------------------------- | --- | ---------------------------------------------- |
-| 1  | ESP32 DevKit               | ESP32-WROOM-32 / DevKit V1          | 1   | Brain — reads sensors, runs PID, drives motors |
-| 2  | 14-channel curved IR array | Custom board                        | 1   | Detects line position                          |
-| 3  | N20 gear motors            | 6 V, encoder-equipped, ~300–500 RPM | 2   | Drives the wheels                              |
-| 4  | Quadrature encoders        | Integrated with N20 motors          | 2   | Measures actual wheel/motor rotation           |
-| 5  | DRV8833 motor driver       | Dual H-bridge                       | 1   | Drives both N20 motors                         |
-| 6  |  Li-ion battery            | ICR 18650 26JM sassung SDIEM TJX4   | 2   | Main power source                              |
-| 7  | Buck converter             | Adjustable, 5 V output, ≥2 A        | 1   | Steps battery voltage down to 5 V              |
-| 8  | Wheels                     | Lightweight, 30–40 mm diameter      | 2   | Converts motor rotation to movement            |
-| 9  | Front skid/caster          | Low-friction (PTFE preferred)       | 1   | Third ground-contact point                     |
-| 10 | Power switch               | Rated for battery current           | 1   | Turns robot on/off                             |
+2. IR SENSOR ARRAY
+-------------------
+Part: Analog straight IR sensor array (model/channel count TBD)
+Role: Detects line position, feeds error value to control loop.
+History: V1 used a curved array - dropped (hard to calibrate,
+         hard to CAD). V2+ uses straight array - simpler math,
+         simpler mounting.
+Mounting: Fixed hole in V2 Final (no longer adjustable).
+Open items: Channel count, sensor spacing, mount height - TBD.
 
-MISC Components 
+3. MOTOR DRIVER
+---------------
+Part: TB6612FNG
+Role: Drives both N20 motors independently (dual H-bridge).
+Notes: Compatible with 3.3V logic from ESP32. Confirm motor
+       supply voltage matches battery pack output.
 
-| #  | Component              | Specification               | Qty | Purpose                                   |
-| -- | ---------------------- | --------------------------- | --- | ----------------------------------------- |
-| 11 | Electrolytic capacitor | 470–1000 µF                 | 1   | Smooths motor current spikes              |
-| 12 | Ceramic capacitors     | 100 nF                      | 2–4 | Suppresses high-frequency noise           |
-| 13 | Battery connector      | -                           | 1   | Battery connection                        |
-| 14 | Logic-level converter  | 3.3 V ↔ 5 V                 | 1   | Only needed if IR board outputs 5 V logic |
-| 15 | Wires                  | jumper wire                 | —   | Power and signal wiring                   |
-| 16 | PCB/perfboard          | Small                       | 1   | Final assembly platform                   |
+4. MOTORS
+---------
+Part: N20 6V geared DC motors, NO encoder (x2)
+Role: Drive wheels, differential steering.
+Notes: Standard N20 motors without encoder feedback. Speed/
+       position control will be open-loop (PWM duty cycle only,
+       no closed-loop speed correction between left/right motor).
+       Line-following error correction still comes from the IR
+       array, but wheel speed mismatch (from motor tolerance,
+       battery sag, friction) cannot be actively corrected
+       without encoders.
+Open items: Gear ratio, shaft diameter match with wheels, stall
+            current. If closed-loop speed control is needed later,
+            would require swapping to encoder-equipped N20 motors
+            or adding an external speed-sensing method.
 
-CUSTOM IR Sensor array
-| # | Component                 | Specification                 | Qty | Purpose                                                                      |
-| - | ------------------------- | ----------------------------- | --- | ---------------------------------------------------------------------------- |
-| 1 | IR LED                    | TRT5000 IR sensor             | 14  | Emits infrared light toward the surface for each sensor channel              |
-| 2 | Current-limiting resistor | 220 Ω                         | 14  | Protects each IR LED from excess current                                     |
-| 3 | Pull-down resistor        | 10 kΩ                         | 14  | Converts phototransistor conduction into a readable analog voltage           |
-| 4 | CD74HC4067 multiplexer    | 16-channel analog/digital mux | 1   | Routes all 14 sensor outputs into a single ESP32 ADC pin                     |
-| 5 | Curved PCB/perfboard      | Custom-cut to your wing shape | 1   | Physically mounts all 14 sensor pairs in your curved arrangement             |
+5. WHEELS
+---------
+Part: High-traction wheels, 32mm diameter (x2)
+Role: Primary drive wheels on N20 motor shafts.
+Open items: Confirm hub bore matches motor shaft (typically 3mm
+            D-shaft). Confirm clearance with chassis/caster mount.
+
+6. CASTER BALL MOUNT
+---------------------
+Part: Caster ball mount (Caster_Ball_Mount.SLDPRT)
+Role: Third ground-contact point, rotates freely, keeps chassis
+      level and stable during turns.
+Status: Scratch/working file - used to test motor mount spacing
+        and final caster height before locking into main chassis.
+
+7. CHASSIS
+----------
+Files: Chasis.SLDPRT, Chasis_final.SLDPRT
+Role: Structural base mounting all components.
+History: V1 (curved, dropped early) -> V2 (straight array,
+         diagonal slots for tolerance) -> V2 Final (slots removed
+         for fixed holes, width reduced to fit print bed flat).
+Status: V2 Final is current. No adjustable mounts remain.
+Open items: Print material, wall thickness, final dimensions.
+
+8. BATTERY
+----------
+Part: 2 x 2.7V Li-ion batteries
+Note: Verify actual cell datasheet - 2.7V nominal is unusually
+      low for standard Li-ion, double check chemistry/rating.
+Open items: Series or parallel config, capacity (mAh), protection
+            circuit.
+
+9. BATTERY HOLDER
+------------------
+Part: TBD
+Role: Holds the 2 Li-ion cells, seats into chassis recess.
+Open items: Exact part, terminal type.
+
+10. BUCK CONVERTER
+-------------------
+Part: TBD
+Role: Steps battery voltage down to ESP32 supply voltage.
+Open items: Input/output voltage once battery config confirmed.
+
+11. FASTENERS
+--------------
+Part: M2.0 nuts and screws
+Role: Secures all mounted parts to chassis.
+Note: Fixed holes in V2 Final need correct tolerance for M2.0
+      screws to seat properly in printed holes.
+
+12. BRACKET
+------------
+Part: Bracket.SLDPRT (render: Bracket-1.PNG)
+Role: Supporting structural part in the assembly.
+Open items: Exact function/mounting location to be documented.
+
+==================================================================
+SUMMARY
+==================================================================
+Component          | Status
+--------------------|----------------------------------
+ESP32               | Selected, version TBD
+IR Sensor Array     | Straight analog, model TBD
+Motor Driver        | TB6612FNG
+N20 Motors (x2)     | Selected, no encoder, gear ratio TBD
+Wheels (32mm, x2)   | Selected
+Caster Ball Mount   | In progress
+Chassis             | V2 Final (current)
+Battery             | Selected, verify voltage/spec
+Battery Holder      | TBD
+Buck Converter      | TBD
+Fasteners           | M2.0
+Bracket             | Selected
+
+==================================================================
+OPEN ACTION ITEMS
+==================================================================
+[ ] Finalise ESP32 board variant
+[ ] Confirm N20 gear ratio and stall current (no encoder fitted)
+[ ] Confirm wheel hub bore matches motor shaft
+[ ] Finalise caster ball part and mount height
+[ ] Verify Li-ion cell datasheet and pack configuration
+[ ] Select battery holder and buck converter
+[ ] Confirm chassis print material and final dimensions
+[ ] Document bracket's exact function/mounting
+[ ] Decide if closed-loop speed control is needed - would
+    require encoder-equipped N20 motors or external sensing
+</content>
