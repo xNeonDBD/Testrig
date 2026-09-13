@@ -175,7 +175,7 @@ Final chassis dimensions and hole positions may still be adjusted after physical
 | V1 → V2 | Curved IR array replaced with straight IR array | Curved layout caused sensor-mapping/coding complexity and CAD hole-spacing problems |
 | V2 | Diagonal/angled slots used for general mounting holes | Intended to give tolerance for component/print inaccuracies during assembly |
 | V2 → V2 Final | Diagonal slots removed, replaced with fixed circular holes at defined spacing | Slots left mounting screws too loose, allowing PCB/bracket shift under vibration or load |
-| V2 → V2 Final | IR sensor mounting slot retained | Sensor position still needs to be adjustable during testing, unlike the other mounts |
+| V2 → V2 Final | IR sensor mounting slot retained |
 | V2 → V2 Final | Overall chassis width reduced | Original V2 length didn't fit flat on the print bed; avoids wasteful angled/supported prints |
 
 ---
@@ -186,7 +186,7 @@ Final chassis dimensions and hole positions may still be adjusted after physical
 2. Install the 32 mm wheels on the motor shafts.
 3. Install the caster ball mount.
 4. Mount the ESP32 and motor driver.
-5. Install the analog IR sensor array in the adjustable slot.
+5. Install the analog IR sensor array.
 6. Place the two Li-ion batteries in the battery holder.
 7. Secure the battery holder using the provided mounting arrangement.
 8. Connect the motors, encoder outputs, IR array, ESP32, motor driver, and power system.
@@ -200,7 +200,7 @@ One of the main problems throughout the CAD stage was **hole placement and dimen
 
 V1 was dropped almost immediately because a curved sensor layout compounded both coding complexity and CAD hole-spacing issues, so effort was redirected into a straight-array design (V2) very early.
 
-V2 initially used diagonal slots liberally across the mounting holes, treating adjustability as a safety margin against CAD or print inaccuracy. In practice, this backfired — slots meant to smooth over minor errors and screws sat loose instead of clamping, letting parts shift under vibration. V2 Final corrected this by converting general mounting holes to fixed positions with accurate spacing, keeping a slot only where adjustability is a genuine functional requirement (the IR sensor mount).
+V2 initially used diagonal slots liberally across the mounting holes, treating adjustability as a safety margin against CAD or print inaccuracy. In practice, this backfired — slots meant to smooth over minor errors and screws sat loose instead of clamping, letting parts shift under vibration. V2 Final corrected this by converting general mounting holes to fixed positions with accurate spacing.
 
 Manufacturability on the actual printer also forced a change in V2 Final. The original V2 length couldn't fit flat within the print bed, and printing it angled with supports would have wasted filament, risked blocking holes with support material, and taken far longer than justified for a simple flat part. Reducing the chassis width solved all three problems at once by keeping the whole print flat and support-free.
 
