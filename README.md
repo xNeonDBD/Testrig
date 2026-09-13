@@ -12,15 +12,15 @@ The chassis went through multiple design iterations before settling on a simpler
 
 - **Microcontroller:** ESP32
   - Specific version: __________
-- **IR Sensor Array:** Analog straight IR sensor array
-- **Motor Driver:** __________
+- **IR Sensor Array:** RLS-08
+- **Motor Driver:** TB6612FNG
 - **Battery:** 2 × 2.7 V Li-ion batteries
-- **Battery Holder:** 1 × __________
+- **Battery Holder**
 - **Power Converter / Buck Converter:** __________
 
 ### Mechanical
 
-- **Motors:** 2 × N20 6 V geared motors with encoders
+- **Motors:** 2 × N20 300RPM geared motors with encoders
 - **Wheels:** 2 × high-traction 32 mm wheels
 - **Caster Wheel:** 1 × caster ball mount
 - **Chassis:** Custom CAD-designed chassis
@@ -47,11 +47,11 @@ Rather than pushing through these issues, the curved-array design was dropped ea
 
 ### V2 — Straight Analog IR Array (Current)
 
-![Chassis Final](Cad/Chasis%20Final.png)
+![Chassis Final](Cad/Final_chasis.png)
 
 The second version uses a **straight analog IR sensor array**. This makes the sensor readings easier to process because the sensors are arranged along a single straight line, and it makes physical mounting and calibration much simpler.
 
-**Main changes:**
+**Main changes from V1:**
 
 - Replaced the curved IR array with a straight analog IR array.
 - Added a **long straight mounting slot** for the sensor/PCB.
@@ -61,18 +61,24 @@ The second version uses a **straight analog IR sensor array**. This makes the se
 - Battery holder sits securely on the chassis instead of shifting during operation.
 - Battery holder/PCB can be secured further with mounting screws if needed.
 
+**Latest revision — fixed hole spacing:**
+
+Earlier V2 iterations used **diagonal/angled mounting slots** for some of the PCB and mounting holes. These have now been **removed and replaced with fixed-position holes** with defined hole spacing.
+
+The reasoning: slots make sense where deliberate adjustability is needed (like the IR sensor mounting slot), but for the general PCB/mounting holes, a slot lets the mounting screw sit loose and shift under vibration or load instead of holding the part rigidly in place. Fixed holes with precise spacing give a tighter, more repeatable fit and stop the screws from working loose during operation.
+
 The final layout is intended to make assembly and future changes easier without redesigning the entire chassis.
 
 ---
 
 ## Chassis Design Features
 
-### Adjustable PCB Mount
+### Adjustable Sensor Mount
 
-A straight slot is provided for the PCB/ perfboard , allowing it to be moved forward or backward during testing to find the best position for line detection and turning performance.
+A straight slot is provided for the IR sensor array, allowing it to be moved forward or backward during testing to find the best position for line detection and turning performance. This is the one mount that intentionally keeps a slot, since sensor position genuinely needs to be tuned during testing.
 
 ```text
-        Perfboard
+        IR SENSOR ARRAY
     ─────────────────────
           ↑       ↑
        Adjustable slot
@@ -80,6 +86,16 @@ A straight slot is provided for the PCB/ perfboard , allowing it to be moved for
 
              CHASSIS
 ```
+
+### Fixed Mounting Holes (Updated)
+
+The diagonal mounting slots used in earlier revisions have been replaced with **fixed circular holes** at defined spacing, visible in the latest chassis render (`Final_chasis.png`).
+
+This affects the main PCB/electronics mounting holes and the motor-side mounting pattern. The fixed-hole approach was chosen over slots because:
+
+- Slots allowed the mounting screws to sit loose rather than clamping tightly.
+- Loose screws risk shifting the PCB or bracket position over time, especially with vibration from the motors.
+- Fixed holes with accurate spacing give a more rigid, repeatable assembly once tightened.
 
 ### Battery Mount
 
@@ -89,7 +105,7 @@ Two large rectangular sections provide a stable location for the battery holder.
 
 ![Caster Ball Mount](Cad/Caster%20ball%20mount.png)
 
-The caster ball mount (`Caster_Ball_Mount.SLDPRT`) is currently a en**working/scratch file**, kept separate from the main chassis so it can be freely edited and iterated on.
+The caster ball mount (`Caster_Ball_Mount.SLDPRT`) is currently a **working/scratch file**, kept separate from the main chassis so it can be freely edited and iterated on.
 
 It's being used to test and lock down:
 
@@ -111,7 +127,7 @@ A supporting bracket part (`Bracket.SLDPRT`) used alongside the chassis assembly
 The chassis was designed with emphasis on:
 
 - Simple manufacturability
-- Adjustable PCB positioning
+- Adjustable sensor positioning
 - Easy PCB mounting
 - Secure battery placement
 - Low unnecessary material
@@ -119,6 +135,14 @@ The chassis was designed with emphasis on:
 - Compatibility with N20 motors and 32 mm wheels
 
 Final chassis dimensions and hole positions may be adjusted after physical testing, since actual component tolerances can differ from CAD dimensions.
+
+### CAD Change Log
+
+| Change | Reason |
+|---|---|
+| Diagonal/angled mounting slots removed | Slots left mounting screws too loose, risking shifting under load/vibration |
+| Fixed-position circular holes added with defined spacing | Gives a tighter, more repeatable, rigid fit for PCB and mounting points |
+| IR sensor slot retained | Sensor position still needs to be adjustable during testing, unlike the other mounts |
 
 ---
 
@@ -140,7 +164,7 @@ Final chassis dimensions and hole positions may be adjusted after physical testi
 
 One of the main problems during the CAD stage was **hole placement and dimensional accuracy**. Since the chassis depends on several different components being mounted together, even a small error in hole spacing or width can cause problems during physical assembly.
 
-For this reason, the V2 design uses slots where adjustment is useful instead of relying on a single fixed mounting position, making the chassis more forgiving during assembly and testing. The caster ball mount is treated the same way — kept as an editable scratch part until the motor and caster dimensions are finalised.
+Initially, slots were used more liberally across the chassis to allow for adjustment. After testing, it became clear that slots are only useful where adjustability is actually needed (the IR sensor mount) — everywhere else, they just let mounting screws sit loose. The mounting holes were therefore converted to fixed positions with accurate spacing, trading adjustability for a more rigid and repeatable fit.
 
 This same reasoning is why V1 was dropped so early — rather than spending time refining a curved layout with compounding CAD and coding problems, effort was redirected into the straight-array V2 design almost immediately.
 
@@ -158,6 +182,7 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 - Screw clearance
 - Cable routing
 - Overall chassis balance
+- Fixed mounting holes are tight with no play (post slot-removal)
 
 ---
 
@@ -168,7 +193,7 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 - Improving PCB mounting
 - Adding dedicated cable-routing holes
 - Reducing unnecessary chassis material
-- Adding more adjustable mounting points
+- Adding more adjustable mounting points where genuinely needed
 - Testing different IR sensor positions
 - Locking down motor mounting and caster ball mounting dimensions
 - Optimising the chassis after the first physical prototype
@@ -184,10 +209,10 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 │   ├── Bracket.SLDPRT
 │   ├── Caster ball mount.png
 │   ├── Caster_Ball_Mount.SLDPRT
-│   ├── Chasis Final.png
 │   ├── Chasis V1.png
 │   ├── Chasis.SLDPRT
-│   └── Chasis_final.SLDPRT
+│   ├── Chasis_final.SLDPRT
+│   └── Final_chasis.png
 ├── Docs/
 │   └── Components/
 ├── Firmware/
@@ -210,7 +235,8 @@ This same reasoning is why V1 was dropped so early — rather than spending time
 | Wheels | Selected |
 | Chassis V1 | Dropped early (curved array issues) |
 | Chassis V2 | Current design (`Chasis_final.SLDPRT`) |
-| PCB Mounting | Improved |
+| PCB Mounting | Fixed holes (slots removed) |
+| Adjustable IR Mount | Added |
 | Battery Mount | Added |
 | Caster Ball Mount | In progress — scratch file for dimension testing |
 
@@ -222,5 +248,7 @@ This chassis is still a prototype. Final dimensions may change after testing the
 
 V1 was only a brief exploration — it was dropped very quickly once the curved sensor array introduced compounding coding and CAD problems, so most of the actual design effort went into V2.
 
-The main goal of the current design is to keep the robot simple, adjustable, and easy to modify while avoiding the mounting and CAD issues encountered in V1.
+The mounting strategy was also revised partway through V2: diagonal slots were replaced with fixed, precisely spaced holes after realising slots left the mounting screws too loose for a stable assembly.
+
+The main goal of the current design is to keep the robot simple, adjustable where it matters, and easy to modify while avoiding the mounting and CAD issues encountered in V1.
 </content>
