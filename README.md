@@ -13,9 +13,9 @@ The chassis went through **three main design stages** — V1, V2, and V2 Final �
 - **Microcontroller:** ESP32
   - Specific version: __________
 - **IR Sensor Array:** Analog straight IR sensor array
-- **Motor Driver:** __________
+- **Motor Driver:** TB6612FNG
 - **Battery:** 2 × 2.7 V Li-ion batteries
-- **Battery Holder:** 1 × __________
+- **Battery Holder:** 1 
 - **Power Converter / Buck Converter:** __________
 
 ### Mechanical
@@ -159,7 +159,6 @@ A supporting bracket part (`Bracket.SLDPRT`) used alongside the chassis assembly
 The chassis was designed with emphasis on:
 
 - Simple manufacturability
-- Adjustable sensor positioning
 - Easy PCB mounting
 - Secure battery placement
 - Low unnecessary material
@@ -227,13 +226,11 @@ Manufacturability on the actual printer also forced a change in V2 Final. The or
 ## Future Improvements
 
 - Finalising the exact ESP32 variant
-- Finalising the motor driver
 - Improving PCB mounting
-- Adding dedicated cable-routing holes
-- Reducing unnecessary chassis material
-- Adding more adjustable mounting points only where genuinely needed
-- Testing different IR sensor positions
-- Locking down motor mounting and caster ball mounting dimensions
+- Final Circuit Design
+- Maze solving Algorithim
+- Adding IMU for perfect turning
+- Testing different types of IR sensors ( digital vs analog) 
 - Optimising the chassis after the first physical prototype
 
 ---
